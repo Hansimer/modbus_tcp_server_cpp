@@ -1,0 +1,31 @@
+modbus_tcp_server_cpp_node:
+  ros__parameters:
+    pose_list:
+      0:
+        type: 1
+        d1: 10.1
+        d2: 10.2
+        d3: 10.3
+        d4: 10.4
+        d5: 10.5
+        d6: 10.6
+        d7: 10.7
+        d8: 10.8
+      1:
+        type: 2
+        d1: 20.1
+        d2: 20.2
+        d3: 20.3
+        d4: 20.4
+        d5: 20.5
+        d6: 20.6
+        d7: 20.7
+        d8: 20.8
+    network:
+      ip: "192.168.20.230"
+      port: 5020
+      max_clients: 5
+      timeout: 10000
+      task_interval: 50
+      
+
