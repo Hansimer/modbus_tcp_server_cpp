@@ -1,0 +1,4 @@
+source;share/modbus_tcp_server_cpp/local_setup.bash
+source;share/modbus_tcp_server_cpp/local_setup.dsv
+source;share/modbus_tcp_server_cpp/local_setup.sh
+source;share/modbus_tcp_server_cpp/local_setup.zsh

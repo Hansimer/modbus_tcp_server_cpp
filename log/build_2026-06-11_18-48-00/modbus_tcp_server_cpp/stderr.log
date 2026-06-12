@@ -1,0 +1,7 @@
+/usr/bin/ld: CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbustcp/modbustcp_server.cpp.o:(.bss+0x0): multiple definition of `modbus_tcp_server_cpp::g_modbus_map'; CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbus_tcp_server_cpp_node.cpp.o:(.bss+0x0): first defined here
+/usr/bin/ld: CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbustcp/modbustcp_server.cpp.o:(.bss+0x8): multiple definition of `modbus_tcp_server_cpp::g_reg_mutex'; CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbus_tcp_server_cpp_node.cpp.o:(.bss+0x8): first defined here
+/usr/bin/ld: CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbustcp/modbustcp_server.cpp.o:(.bss+0x38): multiple definition of `modbus_tcp_server_cpp::g_prev_reg0'; CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbus_tcp_server_cpp_node.cpp.o:(.bss+0x38): first defined here
+collect2: error: ld returned 1 exit status
+gmake[2]: *** [CMakeFiles/modbus_tcp_server_cpp_node.dir/build.make:184：modbus_tcp_server_cpp_node] 错误 1
+gmake[1]: *** [CMakeFiles/Makefile2:139：CMakeFiles/modbus_tcp_server_cpp_node.dir/all] 错误 2
+gmake: *** [Makefile:146：all] 错误 2

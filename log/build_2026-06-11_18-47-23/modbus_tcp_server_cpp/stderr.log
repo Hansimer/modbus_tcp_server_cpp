@@ -1,0 +1,16 @@
+In file included from [01m[K/home/nvidia/workplace/src/modbus_tcp_server_cpp/src/modbus_tcp_server_cpp_node.cpp:14[m[K:
+[01m[K/home/nvidia/workplace/src/modbus_tcp_server_cpp/src/modbustcp/modbustcp_server.hpp:12:10:[m[K [01;31m[Kfatal error: [m[Klog.hpp: 没有那个文件或目录
+   12 | #include [01;31m[K"log.hpp"[m[K
+      |          [01;31m[K^~~~~~~~~[m[K
+compilation terminated.
+In file included from [01m[K/home/nvidia/workplace/src/modbus_tcp_server_cpp/src/modbustcp/modbustcp_server.cpp:1[m[K:
+[01m[K/home/nvidia/workplace/src/modbus_tcp_server_cpp/src/modbustcp/modbustcp_server.hpp:12:10:[m[K [01;31m[Kfatal error: [m[Klog.hpp: 没有那个文件或目录
+   12 | #include [01;31m[K"log.hpp"[m[K
+      |          [01;31m[K^~~~~~~~~[m[K
+compilation terminated.
+gmake[2]: *** [CMakeFiles/modbus_tcp_server_cpp_node.dir/build.make:76：CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbus_tcp_server_cpp_node.cpp.o] 错误 1
+gmake[2]: *** 正在等待未完成的任务....
+gmake[2]: *** [CMakeFiles/modbus_tcp_server_cpp_node.dir/build.make:90：CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbustcp/modbustcp_server.cpp.o] 错误 1
+gmake[1]: *** [CMakeFiles/Makefile2:139：CMakeFiles/modbus_tcp_server_cpp_node.dir/all] 错误 2
+gmake[1]: *** 正在等待未完成的任务....
+gmake: *** [Makefile:146：all] 错误 2

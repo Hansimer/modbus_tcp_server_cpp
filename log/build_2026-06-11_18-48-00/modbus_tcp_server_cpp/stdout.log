@@ -1,0 +1,5 @@
+[35m[1mConsolidate compiler generated dependencies of target test_srv_server[0m
+[ 40%] [32mBuilding CXX object CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbustcp/modbustcp_server.cpp.o[0m
+[ 40%] [32mBuilding CXX object CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbus_tcp_server_cpp_node.cpp.o[0m
+[ 80%] Built target test_srv_server
+[100%] [32m[1mLinking CXX executable modbus_tcp_server_cpp_node[0m

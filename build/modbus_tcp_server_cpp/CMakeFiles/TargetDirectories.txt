@@ -1,0 +1,11 @@
+/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp/CMakeFiles/uninstall.dir
+/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp/CMakeFiles/modbus_tcp_server_cpp_uninstall.dir
+/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp/CMakeFiles/modbus_tcp_server_cpp_node.dir
+/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp/CMakeFiles/test_srv_server.dir
+/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp/CMakeFiles/test.dir
+/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp/CMakeFiles/edit_cache.dir
+/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp/CMakeFiles/rebuild_cache.dir
+/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp/CMakeFiles/list_install_components.dir
+/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp/CMakeFiles/install.dir
+/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp/CMakeFiles/install/local.dir
+/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp/CMakeFiles/install/strip.dir

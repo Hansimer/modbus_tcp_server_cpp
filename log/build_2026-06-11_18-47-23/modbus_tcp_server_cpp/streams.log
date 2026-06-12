@@ -1,0 +1,68 @@
+[0.037s] Invoking command in '/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/nvidia/raybot_core_ws/install/raybot_teleop:/home/nvidia/ws_moveit/install/moveit_configs_utils:/home/nvidia/ws_moveit/install/launch_param_builder:/opt/ros/humble:/home/nvidia/workplace/install/modbus_server_package /usr/bin/cmake /home/nvidia/workplace/src/modbus_tcp_server_cpp -DCMAKE_INSTALL_PREFIX=/home/nvidia/workplace/src/modbus_tcp_server_cpp/install/modbus_tcp_server_cpp
+[0.182s] -- The C compiler identification is GNU 11.4.0
+[0.323s] -- The CXX compiler identification is GNU 11.4.0
+[0.351s] -- Detecting C compiler ABI info
+[0.563s] -- Detecting C compiler ABI info - done
+[0.588s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.589s] -- Detecting C compile features
+[0.590s] -- Detecting C compile features - done
+[0.602s] -- Detecting CXX compiler ABI info
+[0.846s] -- Detecting CXX compiler ABI info - done
+[0.872s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.873s] -- Detecting CXX compile features
+[0.874s] -- Detecting CXX compile features - done
+[0.912s] -- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+[1.338s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[1.747s] -- Found rclcpp: 16.0.19 (/opt/ros/humble/share/rclcpp/cmake)
+[1.956s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[1.989s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[2.026s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[2.077s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.148s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.353s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[2.376s] -- Found rmw_fastrtps_cpp: 6.2.10 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[2.724s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[2.814s] -- Found FastRTPS: /opt/ros/humble/include  
+[2.922s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[2.974s] -- Looking for pthread.h
+[3.190s] -- Looking for pthread.h - found
+[3.191s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[3.419s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[3.421s] -- Found Threads: TRUE  
+[3.578s] -- Found std_srvs: 4.9.1 (/opt/ros/humble/share/std_srvs/cmake)
+[3.606s] -- Found my_interfaces: 0.0.0 (/home/nvidia/workplace/install/my_interfaces/share/my_interfaces/cmake)
+[3.682s] -- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[3.950s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[3.950s] -- Configured cppcheck include dirs: 
+[3.951s] -- Configured cppcheck exclude dirs and/or files: 
+[3.959s] -- Added test 'lint_cmake' to check CMake code style
+[3.974s] -- Added test 'uncrustify' to check C / C++ code style
+[3.974s] -- Configured uncrustify additional arguments: 
+[3.979s] -- Added test 'xmllint' to check XML markup files
+[3.986s] -- Configuring done
+[4.008s] -- Generating done
+[4.016s] -- Build files have been written to: /home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp
+[4.044s] Invoked command in '/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/nvidia/raybot_core_ws/install/raybot_teleop:/home/nvidia/ws_moveit/install/moveit_configs_utils:/home/nvidia/ws_moveit/install/launch_param_builder:/opt/ros/humble:/home/nvidia/workplace/install/modbus_server_package /usr/bin/cmake /home/nvidia/workplace/src/modbus_tcp_server_cpp -DCMAKE_INSTALL_PREFIX=/home/nvidia/workplace/src/modbus_tcp_server_cpp/install/modbus_tcp_server_cpp
+[4.048s] Invoking command in '/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/nvidia/raybot_core_ws/install/raybot_teleop:/home/nvidia/ws_moveit/install/moveit_configs_utils:/home/nvidia/ws_moveit/install/launch_param_builder:/opt/ros/humble:/home/nvidia/workplace/install/modbus_server_package /usr/bin/cmake --build /home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp -- -j8 -l8
+[4.214s] [ 40%] [32mBuilding CXX object CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbus_tcp_server_cpp_node.cpp.o[0m
+[4.214s] [ 40%] [32mBuilding CXX object CMakeFiles/test_srv_server.dir/src/test_srv_server.cpp.o[0m
+[4.218s] [ 60%] [32mBuilding CXX object CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbustcp/modbustcp_server.cpp.o[0m
+[4.595s] In file included from [01m[K/home/nvidia/workplace/src/modbus_tcp_server_cpp/src/modbus_tcp_server_cpp_node.cpp:14[m[K:
+[4.595s] [01m[K/home/nvidia/workplace/src/modbus_tcp_server_cpp/src/modbustcp/modbustcp_server.hpp:12:10:[m[K [01;31m[Kfatal error: [m[Klog.hpp: 没有那个文件或目录
+[4.595s]    12 | #include [01;31m[K"log.hpp"[m[K
+[4.595s]       |          [01;31m[K^~~~~~~~~[m[K
+[4.595s] compilation terminated.
+[4.600s] In file included from [01m[K/home/nvidia/workplace/src/modbus_tcp_server_cpp/src/modbustcp/modbustcp_server.cpp:1[m[K:
+[4.600s] [01m[K/home/nvidia/workplace/src/modbus_tcp_server_cpp/src/modbustcp/modbustcp_server.hpp:12:10:[m[K [01;31m[Kfatal error: [m[Klog.hpp: 没有那个文件或目录
+[4.600s]    12 | #include [01;31m[K"log.hpp"[m[K
+[4.601s]       |          [01;31m[K^~~~~~~~~[m[K
+[4.601s] compilation terminated.
+[4.601s] gmake[2]: *** [CMakeFiles/modbus_tcp_server_cpp_node.dir/build.make:76：CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbus_tcp_server_cpp_node.cpp.o] 错误 1
+[4.601s] gmake[2]: *** 正在等待未完成的任务....
+[4.605s] gmake[2]: *** [CMakeFiles/modbus_tcp_server_cpp_node.dir/build.make:90：CMakeFiles/modbus_tcp_server_cpp_node.dir/src/modbustcp/modbustcp_server.cpp.o] 错误 1
+[4.606s] gmake[1]: *** [CMakeFiles/Makefile2:139：CMakeFiles/modbus_tcp_server_cpp_node.dir/all] 错误 2
+[4.606s] gmake[1]: *** 正在等待未完成的任务....
+[10.621s] [ 80%] [32m[1mLinking CXX executable test_srv_server[0m
+[10.946s] [ 80%] Built target test_srv_server
+[10.949s] gmake: *** [Makefile:146：all] 错误 2
+[10.955s] Invoked command in '/home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/nvidia/raybot_core_ws/install/raybot_teleop:/home/nvidia/ws_moveit/install/moveit_configs_utils:/home/nvidia/ws_moveit/install/launch_param_builder:/opt/ros/humble:/home/nvidia/workplace/install/modbus_server_package /usr/bin/cmake --build /home/nvidia/workplace/src/modbus_tcp_server_cpp/build/modbus_tcp_server_cpp -- -j8 -l8

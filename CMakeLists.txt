@@ -21,7 +21,9 @@ find_library(MODBUS_LIB modbus)
 
 # 编译可执行文件
 add_executable(modbus_tcp_server_cpp_node 
-src/modbus_tcp_server_cpp_node.cpp)
+src/modbus_tcp_server_cpp_node.cpp
+src/modbustcp/modbustcp_server.cpp
+)
 
 target_link_libraries(modbus_tcp_server_cpp_node ${MODBUS_LIB})
 ament_target_dependencies(
@@ -53,7 +55,7 @@ PRIVATE PROJECT_NAME="${PROJECT_NAME}"
 
 install(TARGETS
   test_srv_server
-  DESTINATION share/${PROJECT_NAME}
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 install(DIRECTORY log
