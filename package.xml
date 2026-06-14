@@ -11,13 +11,15 @@
 
   <depend>rclcpp</depend>
   <depend>std_srvs</depend>
-
+  <depend>ethercat_control</depend>
+  
   <build_depend>ament_index_cpp</build_depend>
   <exec_depend>ament_index_cpp</exec_depend>
 
   <build_depend>libmodbus</build_depend>
   <exec_depend>libmodbus</exec_depend>
   <build_depend>my_interfaces</build_depend>
+  
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 

@@ -10,8 +10,8 @@
 
 struct joint_state_
 {
-    float rad_pose;
-    float rad_vel;
+    float rad_pose_current;
+    float rad_vel_current;
     int8_t mode;
     int8_t statues;
     int8_t error;
@@ -29,9 +29,15 @@ struct pose_
 
 struct robot_info
 {
-    joint_state_ joint_neck;
-    joint_state_ joint_arm_left[8];
-    joint_state_ joint_arm_right[8];
-    pose_ pose_current;
+    joint_state_ joint_neck; //脖子
+    joint_state_ joint_rotate; //旋转
+    joint_state_ joint_lift; //提升
+    joint_state_ joint_arm_left[8]; //机械臂左边8个关节
+    joint_state_ joint_arm_right[8]; //机械臂右边8个关节
+    pose_ pose_neck;
+    pose_ pose_rotate;
+    pose_ pose_lift;
+    pose_ pose_arm_left;
+    pose_ pose_arm_right;
 
 };

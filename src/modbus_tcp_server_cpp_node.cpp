@@ -22,6 +22,8 @@ int main(int argc, char** argv)
 {
   rclcpp::init(argc, argv);
   auto node = std::make_shared<modbus_tcp_server_cpp::ModbusTcpServerCppNode>();
+  node->init();
+  node->start();
   rclcpp::spin(node);
   rclcpp::shutdown();
   return 0;

@@ -14,7 +14,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-
+#include "../setpar/config_par.hpp"
 
 using namespace std::chrono_literals;
 using namespace std;
@@ -48,31 +48,39 @@ struct PoseData
 class ModbusTcpServerCppNode : public rclcpp::Node
 {
     public:
-    explicit ModbusTcpServerCppNode();
+        explicit ModbusTcpServerCppNode();
         ~ModbusTcpServerCppNode();
+        bool init();//初始化
+        void start();//运行
+        void stop();//停止
 
 
     private:
-    rclcpp::Client<my_interfaces::srv::SrvMoveAxis>::SharedPtr service_client_;
-    rclcpp::TimerBase::SharedPtr edge_timer_;
-    std::thread modbus_server_thread_;
-    // 存储所有位姿数据
-    std::vector<PoseData> pose_list_;
-    std::string net_ip_;
-    int net_port_;
-    int net_max_clients_;
-    int net_task_interval_ms_;
+        rclcpp::Client<my_interfaces::srv::SrvMoveAxis>::SharedPtr service_client_;
+        rclcpp::TimerBase::SharedPtr edge_timer_;
+        std::thread modbus_server_thread_;
+        // 存储所有位姿数据
+        std::vector<PoseData> pose_list_;
+        std::string net_ip_;
+        int net_port_;
+        int net_max_clients_;
+        int net_task_interval_ms_;
 
-    modbus_mapping_t* g_modbus_map = nullptr;
-    std::mutex        g_reg_mutex;
-    uint16_t          g_prev_reg0 = 0;
+        modbus_mapping_t* g_modbus_map = nullptr;
+        std::mutex        g_reg_mutex;
+        uint16_t          g_prev_reg0 = 0;
+        bool              is_stop_ = false;
+        bool              is_run_ = false;
+
+
+        ConfigParser config_parser_;
 
 
     // ===================== 1. 从 ROS YAML 参数加载位姿 =====================
 
-        void load_pose_from_params();
-        void load_network_params();
-        void wait_service_ready();
+        void load_pose_from_Yaml();
+        void load_network_Yaml();
+        bool wait_service_ready();
 
 
         // 调用服务（匹配 SrvMoveAxis 字段）
@@ -87,6 +95,9 @@ class ModbusTcpServerCppNode : public rclcpp::Node
         void server_loop();
         void write_float_to_modbus_registers(modbus_mapping_t* mb_map, int base_addr, float value);
         float read_float_from_modbus_registers(modbus_mapping_t* mb_map, int base_addr);
+
+        /// @brief 解析XML配置文件，加载设备参数
+        bool load_dev_xmlconfig();
     
     };
 } // namespace modbus_tcp_server_cpp

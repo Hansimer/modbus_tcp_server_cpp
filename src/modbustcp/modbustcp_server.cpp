@@ -1,5 +1,6 @@
 #include "modbustcp_server.hpp"
-
+#include <ament_index_cpp/get_package_share_directory.hpp>
+#include <ament_index_cpp/get_package_prefix.hpp>
 
 using namespace std::chrono_literals;
 using namespace std;
@@ -10,19 +11,35 @@ namespace modbus_tcp_server_cpp
     LOG_INFO("==== Modbus TCP Server C++ Node Started ====");
 
     // 1. 从 ROS 参数加载多组位姿
-    load_pose_from_params();
-    load_network_params();
-    // 初始化 Modbus 寄存器
-    if (!g_modbus_map)
-    {
-      g_modbus_map = modbus_mapping_new(0, 0, REGISTER_COUNT, 0);
-      if (!g_modbus_map)
-      {
-        LOG_INFO("modbus_mapping_new failed");        
-        return;
-      }
-    }
+    load_pose_from_Yaml();
+    load_network_Yaml();
 
+    load_dev_xmlconfig();
+    is_stop_ = false;
+    is_run_ = false;
+  }
+
+  
+
+  ModbusTcpServerCppNode::~ModbusTcpServerCppNode()
+  {
+    stop();
+    if (modbus_server_thread_.joinable())
+    {
+      modbus_server_thread_.join();
+    }
+    if (g_modbus_map)
+    {
+      modbus_mapping_free(g_modbus_map);
+      g_modbus_map = nullptr;
+    }
+  }
+
+  void ModbusTcpServerCppNode::start()
+  {
+   
+
+    //modbus tcp server test
     g_modbus_map->tab_registers[1] = pose_list_.at(1).type; // 直接把第一组位姿的 type 写入寄存器1，方便调试查看
     write_float_to_modbus_registers(g_modbus_map, 10, pose_list_.at(1).d1); // 把第一组位姿的 d1 写入寄存器10-11
     float d1_val = read_float_from_modbus_registers(g_modbus_map, 10); // 从寄存器10-11读取 d1 值
@@ -39,29 +56,36 @@ namespace modbus_tcp_server_cpp
       std::bind(&ModbusTcpServerCppNode::detect_rising_edge, this)
     );
 
+    
+
+  }
+
+  bool ModbusTcpServerCppNode::init()
+  {
     // 创建服务客户端
     service_client_ = this->create_client<my_interfaces::srv::SrvMoveAxis>(
       "/my_interfaces/move_axis");
     wait_service_ready();
+       // 初始化 Modbus 寄存器
+    if (!g_modbus_map)
+    {
+      g_modbus_map = modbus_mapping_new(0, 0, REGISTER_COUNT, 0);
+      if (!g_modbus_map)
+      {
+        LOG_INFO("modbus_mapping_new failed");        
+        return false;
+      }
+    }
+    return true;
   }
 
-  
-
-  ModbusTcpServerCppNode::~ModbusTcpServerCppNode()
+  void ModbusTcpServerCppNode::stop()
   {
-    if (modbus_server_thread_.joinable())
-    {
-      modbus_server_thread_.join();
-    }
-    if (g_modbus_map)
-    {
-      modbus_mapping_free(g_modbus_map);
-      g_modbus_map = nullptr;
-    }
-  }
+    is_stop_ = true ;
+    is_run_ = false ;
+  } 
 
-
-   void ModbusTcpServerCppNode::load_pose_from_params()
+   void ModbusTcpServerCppNode::load_pose_from_Yaml()
 {
   pose_list_.clear();
   LOG_INFO("Loading pose parameters...");
@@ -138,7 +162,7 @@ namespace modbus_tcp_server_cpp
   LOG_INFO("Total loaded poses: %zu", pose_list_.size());
 }
 
-void ModbusTcpServerCppNode::load_network_params()
+void ModbusTcpServerCppNode::load_network_Yaml()
 {
   LOG_INFO("Loading network parameters...");
 
@@ -161,18 +185,19 @@ void ModbusTcpServerCppNode::load_network_params()
 
 
   // 等待服务端上线
-void ModbusTcpServerCppNode::wait_service_ready()
+bool ModbusTcpServerCppNode::wait_service_ready()
 {
-  while (!service_client_->wait_for_service(1s))
+  while (!service_client_->wait_for_service(100s) && !is_stop_)
   {
     if (!rclcpp::ok())
     {
       LOG_INFO("Node shut down while waiting for service!");
-      return;
+      return false;
     }
     LOG_WARN("Waiting for service: /my_interfaces/move_axis...");
   }
-  LOG_INFO("Successfully connected to service!");
+  LOG_INFO("Successfully connected to /my_interfaces/move_axis!");
+  return true;
 }
 
   // 调用服务（匹配 SrvMoveAxis 字段）
@@ -289,8 +314,7 @@ void ModbusTcpServerCppNode::wait_service_ready()
     if (!ctx)
     {
       LOG_ERROR("Create modbus tcp context failed!");
-
-      return;
+      return; 
     }
     modbus_set_debug(ctx, false);
 
@@ -305,7 +329,7 @@ void ModbusTcpServerCppNode::wait_service_ready()
     LOG_INFO("Modbus TCP Listen: %s:%d | Max Client: %d",
       net_ip_.c_str(), net_port_, net_max_clients_);
 
-    while (true)
+    while (!is_stop_)
     {
       int client_fd = modbus_tcp_accept(ctx, &server_fd);
       if (client_fd == -1)
@@ -360,6 +384,67 @@ void ModbusTcpServerCppNode::write_float_to_modbus_registers(modbus_mapping_t* m
     mb_map->tab_registers[base_addr +1] = reg_low;
 }
 
+   /// @brief 解析XML配置文件，加载设备参数
+    bool ModbusTcpServerCppNode::load_dev_xmlconfig()
+    {
+        std::string pkg_prefix = ament_index_cpp::get_package_share_directory(PROJECT_NAME);
+        std::string xml_path = pkg_prefix + "/launch/dev_par.xml";
 
+        
+        if (config_parser_.loadFile(xml_path)) {
+            LOG_INFO( "XML configuration loaded successfully."); 
+            // 1. 先获取目标设备的 params
+          const auto& device_params = config_parser_.devices_cfg.at(1).params;
+
+          // 2. 遍历 map，打印所有 key 和 value
+          LOG_INFO("===== Device %d params list =====", 1);
+          for (const auto& pair : device_params) {
+              const std::string& key = pair.first;
+              const std::string& value = pair.second;
+              LOG_INFO("  key: %-15s | value: %s", key.c_str(), value.c_str());
+          }
+          LOG_INFO("===================================");
+          
+          // 1. 获取 action_entries_map
+          const auto& pose_params = config_parser_.actions.at(0);
+
+          // 2. 遍历外层 map（key: 动作名, value: vector<ActionEntry_>）
+          // pose_params 是 DeviceConfig_action 实例
+            LOG_INFO("===== Action Entries List =====");
+
+            // 第一层：遍历结构体内部的 map<string, vector<ActionEntry_>>
+            const auto& act_map = pose_params.action_entries_map;
+            for (const auto& kv : act_map)
+            {
+                // kv.first = XML 里的 key(init_action)
+                // kv.second = 对应数组 vector<ActionEntry_>
+                const std::string& action_key = kv.first;
+                const std::vector<ActionEntry_>& entry_list = kv.second;
+
+                LOG_INFO("Action Key: %s", action_key.c_str());
+
+                // 第二层：遍历 vector 里每一个动作项
+                for (size_t idx = 0; idx < entry_list.size(); ++idx)
+                {
+                    const ActionEntry_& entry = entry_list[idx];
+                    LOG_INFO("  [%zu] index: %u, sub_index: %u, type: %u",
+                        idx, entry.index, entry.sub_index, entry.type);
+
+                    LOG_INFO("  d1~d14: %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f",
+                        entry.d1,  entry.d2,  entry.d3,  entry.d4,  entry.d5,  entry.d6,  entry.d7,  entry.d8,
+                        entry.d9, entry.d10, entry.d11, entry.d12, entry.d13, entry.d14);
+                }
+                LOG_INFO("--------------------------------");
+            }
+
+            LOG_INFO("=================================");
+        
+          
+        } else {
+             LOG_ERROR("Failed to load XML configuration from %s", xml_path.c_str());
+            return false;
+        }
+        return true;
+    }
 
 }
