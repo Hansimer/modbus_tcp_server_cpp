@@ -14,11 +14,9 @@
 
             <item name="dual_arm" running_name="sync_motor" vendor="rcd_hsm" version="1">
                 <keyval_map>
-                    <item key="name" value="can_dev" />
-                    <item key="mode" value="pos" />
-                    <item key="topic_rawdata" value="can1/raw" />
-                    <item key="topic_sensorymsg" value="/device/motor/sensory" />
-                    <item key="speed_convert_factor" value="2184.52" />
+                    <item key="name" value="ecat_dev" />
+                    <item key="mode" value="pos" />  
+                    <item key="speed_convert_factor" value="1" />                  
                 </keyval_map>
             </item>
         </components>
@@ -27,6 +25,11 @@
             <item key="init_action" value='[
                 {"index":"1000","sub_index":"0","type":"1","d1":"010.1","d2":"10.2","d3":"10.3","d4":"10.4","d5":"00","d6":"00","d7":"00","d8":"00","d9":"00","d10":"00","d11":"00","d12":"00","d13":"00","d14":"00"},
                 {"index":"1000","sub_index":"1","type":"2","d1":"20.1","d2":"20.2","d3":"20.3","d4":"20.4","d5":"00","d6":"00","d7":"00","d8":"00","d9":"00","d10":"00","d11":"00","d12":"00","d13":"00","d14":"00"}
+                ]'
+            />
+            <item key="scan_action" value='[
+                {"index":"1100","sub_index":"0","type":"1","d1":"010.1","d2":"10.2","d3":"10.3","d4":"10.4","d5":"00","d6":"00","d7":"00","d8":"00","d9":"00","d10":"00","d11":"00","d12":"00","d13":"00","d14":"00"},
+                {"index":"1100","sub_index":"1","type":"2","d1":"20.1","d2":"20.2","d3":"20.3","d4":"20.4","d5":"00","d6":"00","d7":"00","d8":"00","d9":"00","d10":"00","d11":"00","d12":"00","d13":"00","d14":"00"}
                 ]'
             />
         </actions>

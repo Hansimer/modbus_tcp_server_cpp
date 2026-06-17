@@ -230,8 +230,9 @@ namespace modbus_tcp_server_cpp
                 DeviceConfig_action action;
                 const char* key = xmlactions->Attribute("key");
                 const char* val = xmlactions->Attribute("value");
-                if (key && val) action.params[key] = val;                
-                    action.parsePdoJson("init_action");
+                if (key && val) action.params[key] = val; 
+                string key_str(key);               
+                    action.parsePdoJson(key_str);
                     actions.push_back(action);
                 xmlactions = xmlactions->NextSiblingElement("item");
             }

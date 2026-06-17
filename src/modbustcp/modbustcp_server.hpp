@@ -15,6 +15,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "../setpar/config_par.hpp"
+#include "../datedef.hpp"
 
 using namespace std::chrono_literals;
 using namespace std;
@@ -30,20 +31,7 @@ constexpr int RECONNECT_DELAY_MS  = 1000;
 
 
 
-// ===================== 位姿结构体定义 =====================
-struct PoseData
-{
-    int ID;
-  int type;
-  float d1;
-  float d2;
-  float d3;
-  float d4;
-  float d5;
-  float d6;
-  float d7;
-  float d8;
-};
+
 
 class ModbusTcpServerCppNode : public rclcpp::Node
 {
@@ -53,6 +41,14 @@ class ModbusTcpServerCppNode : public rclcpp::Node
         bool init();//初始化
         void start();//运行
         void stop();//停止
+
+        //获取动作
+        array_actions_info_ actions_init;
+        array_actions_info_ actions_scan;
+
+        //获取参数
+        dev_params_info_ para_axis_lift;
+        dev_params_info_ para_dual_arms;
 
 
     private:

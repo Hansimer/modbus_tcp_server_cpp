@@ -391,52 +391,187 @@ void ModbusTcpServerCppNode::write_float_to_modbus_registers(modbus_mapping_t* m
         std::string xml_path = pkg_prefix + "/launch/dev_par.xml";
 
         
+        // if (config_parser_.loadFile(xml_path)) {
+        //     LOG_INFO( "XML configuration loaded successfully."); 
+        //     // 1. 先获取目标设备的 params
+        //   const auto& device_params = config_parser_.devices_cfg.at(1).params;
+
+        //   // 2. 遍历 map，打印所有 key 和 value
+        //   LOG_INFO("===== Device %d params list =====", 1);
+        //   for (const auto& pair : device_params) {
+        //       const std::string& key = pair.first;
+        //       const std::string& value = pair.second;
+        //       LOG_INFO("  key: %-15s | value: %s", key.c_str(), value.c_str());
+        //   }
+        //   LOG_INFO("===================================");
+          
+        //   // 1. 获取 action_entries_map
+        //   const auto& pose_params = config_parser_.actions.at(0);
+
+        //   // 2. 遍历外层 map（key: 动作名, value: vector<ActionEntry_>）
+        //   // pose_params 是 DeviceConfig_action 实例
+        //     LOG_INFO("===== Action Entries List =====");
+
+        //     // 第一层：遍历结构体内部的 map<string, vector<ActionEntry_>>
+        //     const auto& act_map = pose_params.action_entries_map;
+        //     for (const auto& kv : act_map)
+        //     {
+        //         // kv.first = XML 里的 key(init_action)
+        //         // kv.second = 对应数组 vector<ActionEntry_>
+        //         const std::string& action_key = kv.first;
+        //         const std::vector<ActionEntry_>& entry_list = kv.second;
+
+        //         LOG_INFO("Action Key: %s", action_key.c_str());
+
+        //         // 第二层：遍历 vector 里每一个动作项
+        //         for (size_t idx = 0; idx < entry_list.size(); ++idx)
+        //         {
+        //             const ActionEntry_& entry = entry_list[idx];
+        //             LOG_INFO("  [%zu] index: %u, sub_index: %u, type: %u",
+        //                 idx, entry.index, entry.sub_index, entry.type);
+
+        //             LOG_INFO("  d1~d14: %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f",
+        //                 entry.d1,  entry.d2,  entry.d3,  entry.d4,  entry.d5,  entry.d6,  entry.d7,  entry.d8,
+        //                 entry.d9, entry.d10, entry.d11, entry.d12, entry.d13, entry.d14);
+        //         }
+        //         LOG_INFO("--------------------------------");
+        //     }
+
+        //     LOG_INFO("=================================");
+        
+          
+        // } else {
+        //      LOG_ERROR("Failed to load XML configuration from %s", xml_path.c_str());
+        //     return false;
+        // }
+
+
         if (config_parser_.loadFile(xml_path)) {
             LOG_INFO( "XML configuration loaded successfully."); 
             // 1. 先获取目标设备的 params
-          const auto& device_params = config_parser_.devices_cfg.at(1).params;
-
-          // 2. 遍历 map，打印所有 key 和 value
-          LOG_INFO("===== Device %d params list =====", 1);
-          for (const auto& pair : device_params) {
-              const std::string& key = pair.first;
-              const std::string& value = pair.second;
-              LOG_INFO("  key: %-15s | value: %s", key.c_str(), value.c_str());
-          }
-          LOG_INFO("===================================");
-          
-          // 1. 获取 action_entries_map
-          const auto& pose_params = config_parser_.actions.at(0);
-
-          // 2. 遍历外层 map（key: 动作名, value: vector<ActionEntry_>）
-          // pose_params 是 DeviceConfig_action 实例
-            LOG_INFO("===== Action Entries List =====");
-
-            // 第一层：遍历结构体内部的 map<string, vector<ActionEntry_>>
-            const auto& act_map = pose_params.action_entries_map;
-            for (const auto& kv : act_map)
+          const auto& device_params = config_parser_.devices_cfg;
+          LOG_INFO("===== Device params list =====");
+          for(auto& par :device_params)
+          {
+            if (par.device_name =="lift_motor" ) //提升电机参数
             {
-                // kv.first = XML 里的 key(init_action)
-                // kv.second = 对应数组 vector<ActionEntry_>
-                const std::string& action_key = kv.first;
-                const std::vector<ActionEntry_>& entry_list = kv.second;
+              auto& tmap = par.params;
+              auto it = tmap.find("mode");
+              if (it != tmap.end()) {
+                  // it->second 就是 "mode" 对应的 value
+                  para_axis_lift.mode = it->second;
+              } 
 
-                LOG_INFO("Action Key: %s", action_key.c_str());
+              it = tmap.find("speed_convert_factor");
+              if (it != tmap.end()) {
+                  // it->second 就是 "mode" 对应的 value
+                  para_axis_lift.speed_convert_factor = std::stof(it->second);
+              } 
+              LOG_INFO(" lift_motor mode is %s , factor is %.2f",para_axis_lift.mode.c_str(),para_axis_lift.speed_convert_factor);
+            }
 
-                // 第二层：遍历 vector 里每一个动作项
-                for (size_t idx = 0; idx < entry_list.size(); ++idx)
+            if (par.device_name =="dual_arm" ) //提升电机参数
+            {
+              auto& tmap = par.params;
+              auto it = tmap.find("mode");
+              if (it != tmap.end()) {
+                  // it->second 就是 "mode" 对应的 value
+                  para_axis_lift.mode = it->second;
+              } 
+
+              it = tmap.find("speed_convert_factor");
+              if (it != tmap.end()) {
+                  // it->second 就是 "mode" 对应的 value
+                  para_axis_lift.speed_convert_factor = std::stof(it->second);
+              } 
+              LOG_INFO(" dual_arm mode is %s , factor is %.2f",para_axis_lift.mode.c_str(),para_axis_lift.speed_convert_factor);
+            }
+            
+          }
+
+          LOG_INFO("===== actions list =====");
+          const auto& pose_params = config_parser_.actions;
+          for(auto &pose_param : pose_params)
+          {
+              auto &tmap1 = pose_param.action_entries_map;
+              auto it = tmap1.find("init_action");
+              if(it != tmap1.end())
+              {
+                auto it2 = it->second;
+                // 关键：提前扩容，和源 vector 大小保持一致
+                actions_init.actions.resize(it2.size());
+                for (size_t idx = 0; idx < it2.size(); ++idx)
                 {
-                    const ActionEntry_& entry = entry_list[idx];
-                    LOG_INFO("  [%zu] index: %u, sub_index: %u, type: %u",
-                        idx, entry.index, entry.sub_index, entry.type);
+                  actions_init.actions.at(idx).index = it2.at(idx).index;
+                  actions_init.actions.at(idx).sub_index =  it2.at(idx).sub_index;
+                  actions_init.actions.at(idx).type = it2.at(idx).type;
+                  actions_init.actions.at(idx).info_.action_data.d1 = it2.at(idx).d1;
+                  actions_init.actions.at(idx).info_.action_data.d2 = it2.at(idx).d2;
+                  actions_init.actions.at(idx).info_.action_data.d3 = it2.at(idx).d3;
+                  actions_init.actions.at(idx).info_.action_data.d4 = it2.at(idx).d4;
+                  actions_init.actions.at(idx).info_.action_data.d5 = it2.at(idx).d5;
+                  actions_init.actions.at(idx).info_.action_data.d6 = it2.at(idx).d6;
+                  actions_init.actions.at(idx).info_.action_data.d7 = it2.at(idx).d7;
+                  actions_init.actions.at(idx).info_.action_data.d8 = it2.at(idx).d8;
+                  actions_init.actions.at(idx).info_.action_data.d9 = it2.at(idx).d9;
+                  actions_init.actions.at(idx).info_.action_data.d10 = it2.at(idx).d10;
+                  actions_init.actions.at(idx).info_.action_data.d11 = it2.at(idx).d11;
+                  actions_init.actions.at(idx).info_.action_data.d12 = it2.at(idx).d12;
+                  actions_init.actions.at(idx).info_.action_data.d13 = it2.at(idx).d13;
+                  actions_init.actions.at(idx).info_.action_data.d14 = it2.at(idx).d14;
 
+                  
+                  LOG_INFO("  [%zu] index: %u, sub_index: %u, type: %u",
+                        idx, actions_init.actions.at(idx).index, actions_init.actions.at(idx).sub_index, actions_init.actions.at(idx).type);
+                  auto entry = actions_init.actions.at(idx).info_.action_data;
                     LOG_INFO("  d1~d14: %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f",
                         entry.d1,  entry.d2,  entry.d3,  entry.d4,  entry.d5,  entry.d6,  entry.d7,  entry.d8,
                         entry.d9, entry.d10, entry.d11, entry.d12, entry.d13, entry.d14);
                 }
-                LOG_INFO("--------------------------------");
-            }
+              }
 
+
+             
+              it = tmap1.find("scan_action");
+              if(it != tmap1.end())
+              {
+                auto it2 = it->second;
+                // 关键：提前扩容，和源 vector 大小保持一致
+                actions_init.actions.resize(it2.size());
+                for (size_t idx = 0; idx < it2.size(); ++idx)
+                {
+                  actions_init.actions.at(idx).index = it2.at(idx).index;
+                  actions_init.actions.at(idx).sub_index =  it2.at(idx).sub_index;
+                  actions_init.actions.at(idx).type = it2.at(idx).type;
+                  actions_init.actions.at(idx).info_.action_data.d1 = it2.at(idx).d1;
+                  actions_init.actions.at(idx).info_.action_data.d2 = it2.at(idx).d2;
+                  actions_init.actions.at(idx).info_.action_data.d3 = it2.at(idx).d3;
+                  actions_init.actions.at(idx).info_.action_data.d4 = it2.at(idx).d4;
+                  actions_init.actions.at(idx).info_.action_data.d5 = it2.at(idx).d5;
+                  actions_init.actions.at(idx).info_.action_data.d6 = it2.at(idx).d6;
+                  actions_init.actions.at(idx).info_.action_data.d7 = it2.at(idx).d7;
+                  actions_init.actions.at(idx).info_.action_data.d8 = it2.at(idx).d8;
+                  actions_init.actions.at(idx).info_.action_data.d9 = it2.at(idx).d9;
+                  actions_init.actions.at(idx).info_.action_data.d10 = it2.at(idx).d10;
+                  actions_init.actions.at(idx).info_.action_data.d11 = it2.at(idx).d11;
+                  actions_init.actions.at(idx).info_.action_data.d12 = it2.at(idx).d12;
+                  actions_init.actions.at(idx).info_.action_data.d13 = it2.at(idx).d13;
+                  actions_init.actions.at(idx).info_.action_data.d14 = it2.at(idx).d14;
+
+                  
+                  LOG_INFO("  [%zu] index: %u, sub_index: %u, type: %u",
+                        idx, actions_init.actions.at(idx).index, actions_init.actions.at(idx).sub_index, actions_init.actions.at(idx).type);
+                  auto entry = actions_init.actions.at(idx).info_.action_data;
+                    LOG_INFO("  d1~d14: %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f",
+                        entry.d1,  entry.d2,  entry.d3,  entry.d4,  entry.d5,  entry.d6,  entry.d7,  entry.d8,
+                        entry.d9, entry.d10, entry.d11, entry.d12, entry.d13, entry.d14);
+                }
+              }
+              
+
+
+          }          
+         
             LOG_INFO("=================================");
         
           

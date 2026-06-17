@@ -30,9 +30,12 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_action REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(my_interfaces REQUIRED)
 find_package(ethercat_control REQUIRED)
+find_package(robot_controller REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_library(MODBUS_LIB modbus)
 
@@ -40,16 +43,20 @@ find_library(MODBUS_LIB modbus)
 include_directories(/home/nvidia/raybot_connection_ws/install/ethercat_control/include/
                     /home/nvidia/raybot_connection_ws/install/my_interfaces/include/
                     /usr/include/modbus
+                    /home/nvidia/raybot_connection_ws/install/robot_controller/include/
                     )
 
 # 2. 指定库路径和链接库
-link_directories(/home/nvidia/raybot_connection_ws/install/ethercat_control/lib)
+link_directories(/home/nvidia/raybot_connection_ws/install/ethercat_control/lib
+                /home/nvidia/raybot_connection_ws/install/robot_controller/lib
+)
 # target_link_libraries(test_srv_server ethercat_control)
 
 # 编译可执行文件
 add_executable(modbus_tcp_server_cpp_node 
 src/modbus_tcp_server_cpp_node.cpp
 src/modbustcp/modbustcp_server.cpp
+src/ctrl_raybot/ctrl_raybot.cpp
 )
 
 target_link_libraries(modbus_tcp_server_cpp_node 
@@ -77,9 +84,11 @@ add_executable(test_srv_server
 ament_target_dependencies(
   test_srv_server
   rclcpp
+  rclcpp_action
   my_interfaces
-
+  sensor_msgs
   ethercat_control
+  robot_controller
 )
 
 target_compile_definitions(modbus_tcp_server_cpp_node 
